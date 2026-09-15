@@ -1,0 +1,6 @@
+# Ignore SSMS user-specific settings and window layouts
+*.ssmssln
+*.ssmssqlproj
+*.user
+*.suo
+.vs/
