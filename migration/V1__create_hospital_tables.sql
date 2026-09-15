@@ -4,5 +4,6 @@ create table Patients
 	FistName varchar(50) not null,
 	LastName varchar(50) not null,
 	Gender char(7),
-	constraint chk_Gender check (Gender IN('Male','Female'))
+	constraint chk_Gender check (Gender IN('Male','Female')),
+	Date_Of_Birth DATE
 );
