@@ -5,6 +5,4 @@ CREATE TABLE Nurse
 	Qualification NVARCHAR(100) NOT NULL,
 	Shift NVARCHAR(20) NOT NULL,
     CONSTRAINT FK_Nurse_Employee
-	FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID)
-
 );
