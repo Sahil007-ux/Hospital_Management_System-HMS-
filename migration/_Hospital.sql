@@ -12,10 +12,5 @@ CREATE TABLE Hospital
 
 	-- Constraints
 
-	CONSTRAINT Pk_Hospital PRIMARY KEY (Hospital_ID),
-	CONSTRAINT UQ_Hospital_License UNIQUE (License_Number),
-	CONSTRAINT UQ_Hopital_Email UNIQUE(Email),
-	CONSTRAINT CHK_Bed_Capacity CHECK (Bed_Capacity >= 0)
-
 );
 GO
