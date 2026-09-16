@@ -1,10 +1,10 @@
 
 CREATE DATABASE HopitalDB
 
-CREATE TABLE Patients
+CREATE TABLE Patient
 (
 
-	PatientsID INT IDENTITY(1,1) primary key,
+	PatientID INT IDENTITY(1,1) primary key,
 	FistName VARCHAR(50) not null,
 	LastName VARCHAR(50) not null,
 	Gender CHAR(7),
