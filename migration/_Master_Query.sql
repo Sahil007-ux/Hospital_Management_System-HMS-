@@ -141,7 +141,7 @@ CREATE TABLE Nurse
 	Employee_ID INT NOT NULL UNIQUE,
 	Qualification NVARCHAR(100) NOT NULL,
 	Shift NVARCHAR(20) NOT NULL,
-    CONSTRAINT FK_Nurse_Employee
+    
 );
 
 
