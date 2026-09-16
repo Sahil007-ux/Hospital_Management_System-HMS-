@@ -9,10 +9,5 @@ CREATE TABLE Medical_Record
 	Treatment NVARCHAR(1000)  NULL,
 	Notes NVARCHAR(1000) NULL,
 
-	CONSTRAINT FK_Medical_Record_Patient
-		FOREIGN KEY (Patient_ID) REFERENCES Patient(Patient_ID),
-
-	CONSTRAINT FK_Medical_Record_Doctor
-		FOREIGN KEY (Doctor_ID) REFERENCES Doctor(Doctor_ID)
 
 );
