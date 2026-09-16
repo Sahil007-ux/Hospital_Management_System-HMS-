@@ -3,7 +3,7 @@ CREATE TABLE Employee
 	Employee_ID INT PRIMARY KEY,
 	Name NVARCHAR(100) NOT NULL,
 	Gender CHAR(7),
-	CONSTRAINT chk_Gender CHECK (Gender IN('Male','Female')),
+	CONSTRAINT chk1_Gender CHECK (Gender IN('Male','Female')),
 	Phone VARCHAR(20) NULL,
 	Email VARCHAR(254) null,
 	Salary DECIMAL(12,2) NOT NULL,
