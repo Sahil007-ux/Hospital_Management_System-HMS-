@@ -1,4 +1,4 @@
-create table Receptionist 
+CREATE TABLE Receptionist
 (
 	Receptionist_ID INT  PRIMARY KEY NOT NULL,
 	Employee_ID INT NOT NULL,
