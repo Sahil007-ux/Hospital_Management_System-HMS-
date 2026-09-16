@@ -4,8 +4,8 @@ CREATE TABLE Test_Report
 	Report_ID INT PRIMARY KEY,
 	Patient_ID INT NOT NULL,
 	Doctor_ID INT NOT NULL,
-	Test-Date DATE NOT NULL,
-	Test-Type NVARCHAR(100) NOT NULL,
+	Test_Date DATE NOT NULL,
+	Test_Type NVARCHAR(100) NOT NULL,
 	Result NVARCHAR(1000) NULL,
 
 	CONSTRAINT FK_Test_Report_Patient
