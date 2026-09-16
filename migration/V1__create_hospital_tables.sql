@@ -9,6 +9,12 @@ CREATE TABLE Patients
 	LastName VARCHAR(50) not null,
 	Gender CHAR(7),
 	CONSTRAINT chk_Gender CHECK (Gender IN('Male','Female')),
-	Age INT
+	Age INT,
+	DateOfBirth DATE,
+	Phone INT,
+	Address VARCHAR(50),
+	Blood_Group VARCHAR(3) CHECK (Blood_Group IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'
+	))
+
  
 );
