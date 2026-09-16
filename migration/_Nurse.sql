@@ -1,0 +1,10 @@
+CREATE TABLE Nurse
+(
+	Nurse_ID INT PRIMARY KEY NOT NULL,
+	Employee_ID INT NOT NULL UNIQUE,
+	Qualification NVCHAR(100) NOT NULL,
+	Shift NVCHAR(20) NOT NULL,
+    CONSTRAINT FK_Nurse_Employee
+	FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID)
+
+);
