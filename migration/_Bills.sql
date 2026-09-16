@@ -9,4 +9,5 @@ CREATE TABLE Bills
 	FOREIGN KEY (Patient_ID) REFERENCES Patients(PatientsID),
 	FOREIGN KEY (Addmission_ID) REFERENCES Addmission(Addmission_ID)
 
+
 );
