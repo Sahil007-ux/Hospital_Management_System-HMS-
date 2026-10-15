@@ -1,11 +1,21 @@
-CREATE TABLE Bills
+﻿-- REFERENCE FRAGMENT ONLY. Use _Master_Query.sql for complete installation.
+-- Keys, indexes, defaults, checks and triggers are included in the master.
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+SET ANSI_PADDING ON;
+SET ANSI_WARNINGS ON;
+SET ARITHABORT ON;
+SET CONCAT_NULL_YIELDS_NULL ON;
+SET NUMERIC_ROUNDABORT OFF;
+GO
+CREATE TABLE [dbo].[Bills](
+	[Bill_ID] [int] NOT NULL,
+	[Patient_ID] [int] NOT NULL,
+	[Admission_ID] [int] NULL,
+	[Bill_Date] [date] NOT NULL,
+PRIMARY KEY CLUSTERED 
 (
-	Bill_ID INT PRIMARY KEY,
-	Patient_ID INT NOT NULL,
-	Addmission_ID INT,
-	Ammount DECIMAL(10,2) NOT NULL,
-	Bill_Date DATE NOT NULL,
-	Payment_Satus VARCHAR(20) NOT NULL,
-
-
-);
+	[Bill_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO

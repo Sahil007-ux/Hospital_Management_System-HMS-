@@ -1,12 +1,27 @@
-CREATE TABLE Addmission 
+﻿-- REFERENCE FRAGMENT ONLY. Use _Master_Query.sql for complete installation.
+-- Keys, indexes, defaults, checks and triggers are included in the master.
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+SET ANSI_PADDING ON;
+SET ANSI_WARNINGS ON;
+SET ARITHABORT ON;
+SET CONCAT_NULL_YIELDS_NULL ON;
+SET NUMERIC_ROUNDABORT OFF;
+GO
+CREATE TABLE [dbo].[Admission](
+	[Admission_ID] [int] NOT NULL,
+	[Patient_ID] [int] NOT NULL,
+	[Admission_Date] [datetime2](0) NOT NULL,
+	[Admission_Discharge_Date] [datetime2](0) NULL,
+	[Admission_Reason] [nvarchar](500) NOT NULL,
+PRIMARY KEY CLUSTERED 
 (
-	
-	Admission_ID INT PRIMARY KEY,
-	Patient_ID INT NOT NULL,
-	Room_ID INT NOT NULL,
-	Admission_Date DATE NOT NULL,
-	Discharge_Date DATE NULL,
-	Reason NVARCHAR(500) NOT NULL,
-	
-
-);
+	[Admission_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+ CONSTRAINT [UQ_Admission_ID_Patient] UNIQUE NONCLUSTERED 
+(
+	[Admission_ID] ASC,
+	[Patient_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO

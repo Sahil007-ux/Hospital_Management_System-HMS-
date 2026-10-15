@@ -1,18 +1,29 @@
-CREATE TABLE Rooms
+﻿-- REFERENCE FRAGMENT ONLY. Use _Master_Query.sql for complete installation.
+-- Keys, indexes, defaults, checks and triggers are included in the master.
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+SET ANSI_PADDING ON;
+SET ANSI_WARNINGS ON;
+SET ARITHABORT ON;
+SET CONCAT_NULL_YIELDS_NULL ON;
+SET NUMERIC_ROUNDABORT OFF;
+GO
+CREATE TABLE [dbo].[Rooms](
+	[Room_ID] [int] NOT NULL,
+	[Room_Number] [varchar](10) NOT NULL,
+	[Room_Floor_Number] [int] NOT NULL,
+	[Room_Daily_Charge] [decimal](12, 2) NOT NULL,
+	[Room_Type] [nvarchar](50) NOT NULL,
+	[Room_Availability_Status] [nvarchar](20) NOT NULL,
+	[Room_Capacity] [int] NOT NULL,
+	[Department_ID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
 (
-
-	Room_ID INT PRIMARY KEY,
-	Room_Number VARCHAR(10) NOT NULL UNIQUE,
-	Floor_Number INT NOT NULL,
-	Daily_Charge DECIMAL(12,2) NOT NULL,
-	Room_Type NVARCHAR(50) NOT NULL,
-	Availability_Status NVARCHAR(20) NOT NULL,
-	Capacity INT NOT NULL,
-
-	CONSTRAINT CK_Rooms_DailyCharge
-	CHECK (Daily_Charge >= 0),
-
-	CONSTRAINT CK_Rooms_Capacity
-	CHECK (Capacity > 0)
-
-);
+	[Room_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[Room_Number] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
