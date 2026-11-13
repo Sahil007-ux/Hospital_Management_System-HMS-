@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HMS · Hospital Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f7fb;--surface:#fff;--surface2:#f8fafc;--border:#e4e9f0;--text:#0f1b2d;--muted:#64748b;
+  --brand:#0e9f8e;--brand-d:#0a7d70;--brand-soft:#e3f6f3;
+  --blue:#3b82f6;--amber:#f59e0b;--red:#ef4444;--green:#10b981;--violet:#8b5cf6;
+  --shadow:0 1px 2px rgba(15,27,45,.05),0 4px 14px rgba(15,27,45,.06);
+  --side:#0b2239;--side-t:#9fb3c8;
+}
+:root[data-theme=dark]{
+  --bg:#0c141f;--surface:#121c2b;--surface2:#16233a;--border:#22324a;--text:#e6edf6;--muted:#8da0b7;
+  --brand:#2dd4bf;--brand-d:#14b8a6;--brand-soft:#12332f;--shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.3);
+  --side:#08111c;
+}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.5 Inter,system-ui,Segoe UI,sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
+button,input,select,textarea{font:inherit;color:inherit}
+aside{width:248px;background:var(--side);color:var(--side-t);padding:18px 12px;position:sticky;top:0;height:100vh;overflow:auto;flex-shrink:0}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 10px 18px;color:#fff;font-weight:700;font-size:17px}
+.logo i{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#2dd4bf,#0e9f8e);display:grid;place-items:center;font-style:normal;color:#06322d;font-size:20px}
+.logo small{display:block;font-weight:400;font-size:11px;color:var(--side-t)}
+.grp{font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin:16px 10px 6px;opacity:.6}
+.nav{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border-radius:9px;border:0;background:none;color:inherit;cursor:pointer;text-align:left}
+.nav:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav.on{background:rgba(45,212,191,.16);color:#fff;box-shadow:inset 3px 0 0 #2dd4bf}
+.nav span.c{margin-left:auto;font-size:11px;opacity:.6}
+main{flex:1;min-width:0;padding:22px 28px 40px}
+header.top{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+header.top h1{font-size:22px;margin:0;font-weight:700}
+header.top p{margin:0;color:var(--muted)}
+.sp{flex:1}
+.btn{border:1px solid var(--border);background:var(--surface);padding:8px 14px;border-radius:9px;cursor:pointer;font-weight:500;display:inline-flex;gap:6px;align-items:center}
+.btn:hover{background:var(--surface2)}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.pri:hover{background:var(--brand-d)}
+.btn.dan{color:var(--red)}
+.btn.sm{padding:4px 9px;font-size:12.5px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:16px}
+.kpi{padding:16px 18px;display:flex;gap:14px;align-items:center}
+.kpi .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:20px}
+.kpi b{display:block;font-size:24px;line-height:1.1}
+.kpi span{color:var(--muted);font-size:12.5px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;margin-bottom:14px}
+.card h3{margin:0;padding:14px 18px 0;font-size:14px}
+.card .body{padding:14px 18px 18px}
+.bar{display:grid;grid-template-columns:130px 1fr 40px;align-items:center;gap:10px;margin:8px 0;font-size:13px}
+.bar .t{height:10px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .t div{height:100%;border-radius:6px}
+.bar em{font-style:normal;color:var(--muted);text-align:right}
+.bar .l{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cols{display:flex;align-items:flex-end;gap:14px;height:150px;padding-top:10px}
+.cols div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:11.5px;color:var(--muted)}
+.cols div i{display:block;width:100%;max-width:46px;background:linear-gradient(var(--brand),var(--brand-d));border-radius:7px 7px 0 0;margin-bottom:6px;min-height:3px}
+.cols div b{color:var(--text);font-size:11.5px;margin-bottom:3px}
+.tools{display:flex;gap:10px;padding:14px;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--border)}
+.search{flex:1;min-width:200px;max-width:380px;padding:9px 12px 9px 34px;border:1px solid var(--border);border-radius:9px;background:var(--surface2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Ccircle cx='7' cy='7' r='5'/%3E%3Cpath d='m11 11 4 4'/%3E%3C/svg%3E") 11px 50% no-repeat}
+.wrap{overflow:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 14px;text-align:left;white-space:nowrap;max-width:300px;overflow:hidden;text-overflow:ellipsis}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--surface2);cursor:pointer;user-select:none;position:sticky;top:0}
+th.sorted{color:var(--brand)}
+td{border-top:1px solid var(--border)}
+tr:hover td{background:var(--surface2)}
+td.act{text-align:right;width:1%;white-space:nowrap}
+.pager{display:flex;align-items:center;gap:8px;padding:12px 14px;border-top:1px solid var(--border);color:var(--muted)}
+.chip{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600;background:var(--surface2);color:var(--muted)}
+.chip.g{background:#d1fae5;color:#047857}.chip.a{background:#fef3c7;color:#b45309}.chip.r{background:#fee2e2;color:#b91c1c}.chip.b{background:#dbeafe;color:#1d4ed8}
+:root[data-theme=dark] .chip.g{background:#064e3b;color:#6ee7b7}:root[data-theme=dark] .chip.a{background:#4a3408;color:#fcd34d}
+:root[data-theme=dark] .chip.r{background:#4c1519;color:#fca5a5}:root[data-theme=dark] .chip.b{background:#14325e;color:#93c5fd}
+.fk{color:var(--brand-d);font-weight:500}
+dialog{border:0;border-radius:16px;padding:0;width:min(640px,94vw);background:var(--surface);color:var(--text);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+dialog.wide{width:min(860px,94vw)}
+dialog::backdrop{background:rgba(8,17,28,.55);backdrop-filter:blur(3px)}
+.mh{display:flex;align-items:center;padding:16px 22px;border-bottom:1px solid var(--border)}
+.mh h2{margin:0;font-size:17px;flex:1}
+.mb{padding:18px 22px;max-height:68vh;overflow:auto}
+.mf{padding:14px 22px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form .full{grid-column:1/-1}
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:4px}
+label u{color:var(--red);text-decoration:none}
+input,select,textarea{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:9px;background:var(--surface2);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+input[type=checkbox]{width:auto}
+.toast{position:fixed;right:22px;bottom:22px;display:flex;flex-direction:column;gap:8px;z-index:99}
+.toast div{padding:12px 16px;border-radius:11px;background:var(--text);color:var(--bg);box-shadow:var(--shadow);max-width:380px;animation:in .2s}
+.toast .e{background:var(--red);color:#fff}
+@keyframes in{from{transform:translateY(10px);opacity:0}}
+.prof{display:flex;gap:16px;align-items:center;margin-bottom:14px}
+.av{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--blue));color:#fff;display:grid;place-items:center;font-size:22px;font-weight:700}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:6px}
+.facts div{background:var(--surface2);border-radius:10px;padding:9px 12px}
+.facts span{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.sec{font-weight:700;margin:18px 0 6px}
+.sec small{font-weight:400;color:var(--muted)}
+.mini td,.mini th{padding:7px 10px;font-size:13px;white-space:normal;max-width:none}
+.empty{color:var(--muted);padding:26px;text-align:center}
+.sum{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.sum div{flex:1;min-width:120px;background:var(--surface2);border-radius:10px;padding:10px 14px}
+.sum b{display:block;font-size:19px}
+.menu{display:none;border:0;background:var(--surface);padding:7px 11px;border-radius:9px;cursor:pointer;font-size:18px}
+@media(max-width:860px){
+  aside{position:fixed;z-index:20;left:-260px;transition:left .2s}aside.open{left:0}
+  .menu{display:block}main{padding:16px}.form{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<aside id="side"></aside>
+<main>
+  <header class="top">
+    <button class="menu" onclick="side.classList.toggle('open')">☰</button>
+    <div><h1 id="title"></h1><p id="sub"></p></div>
+    <div class="sp"></div>
+    <span id="actions"></span>
+    <button class="btn" id="theme" title="Toggle theme">🌓</button>
+  </header>
+  <div id="view"></div>
+</main>
+<div class="toast" id="toast"></div>
+<dialog id="dlg"></dialog>
+
+<script>
+const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const api=async(url,opt={})=>{
+  const r=await fetch(url,{headers:{'Content-Type':'application/json'},...opt,body:opt.body&&JSON.stringify(opt.body)});
+  const j=await r.json().catch(()=>({})); if(!r.ok) throw new Error(j.error||'Request failed'); return j;
+};
+const toast=(m,err)=>{const d=document.createElement('div');d.textContent=m;if(err)d.className='e';$('#toast').append(d);setTimeout(()=>d.remove(),err?6000:2800)};
+const money=n=>'$'+Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+const nice=s=>s.replace(/^[A-Za-z]+?_/,'').replace(/_/g,' ');  // strip "Patient_" prefix
+const pretty=s=>s.replace(/_/g,' ');
+const fmtDate=v=>v?String(v).replace('T',' ').replace(/:00$/,''):'—';
+
+const GROUPS=[
+ ['Clinical',[['Patient','🧑'],['Appointment','📅'],['Medical_Record','📋'],['Test_Report','🧪'],['Prescription','💊'],['Prescription_Item','📝'],['Medicine','🧴']]],
+ ['Inpatient',[['Admission','🛏️'],['Bed_Assignment','📌'],['Nurse_Assignment','🩺'],['Rooms','🚪'],['Bed','🛌']]],
+ ['Finance',[['Bills','🧾'],['Bill_Item','🏷️'],['Payment','💳'],['Service','🛎️']]],
+ ['People',[['Employee','👥'],['Doctor','👨‍⚕️'],['Nurse','👩‍⚕️'],['Receptionist','🗂️']]],
+ ['Organisation',[['Hospital','🏥'],['Department','🏢']]],
+];
+const ICON={}; GROUPS.forEach(g=>g[1].forEach(([t,i])=>ICON[t]=i));
+const SUGGEST=/(Status|Method|Shift|Gender|Type|Form|Blood_Group|Route|Unit)$/;
+const DESC={Bills:'Billing records are shown on the Billing page',};
+
+let META={}, LOOK={}, state={}, theme=localStorage.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+const applyTheme=()=>document.documentElement.dataset.theme=theme; applyTheme();
+$('#theme').onclick=()=>{theme=theme==='dark'?'light':'dark';localStorage.theme=theme;applyTheme()};
+
+function nav(){
+  const cur=location.hash.slice(2)||'dashboard';
+  side.innerHTML=`<div class="logo"><i>✚</i><div>HMS<small>Hospital Management</small></div></div>
+  <button class="nav ${cur==='dashboard'?'on':''}" onclick="go('dashboard')">📊 Dashboard</button>
+  <button class="nav ${cur==='billing'?'on':''}" onclick="go('billing')">💰 Billing</button>`+
+  GROUPS.map(([g,ts])=>`<div class="grp">${g}</div>`+ts.map(([t,i])=>
+    `<button class="nav ${cur===t?'on':''}" onclick="go('${t}')">${i} ${pretty(t)}</button>`).join('')).join('');
+}
+const go=p=>{location.hash='/'+p;side.classList.remove('open')};
+window.onhashchange=route;
+
+async function lookup(t){ if(!LOOK[t]){const l=await api('/api/lookup/'+t);LOOK[t]=Object.fromEntries(l.map(x=>[x.id,x.label]));LOOK[t]._list=l;} return LOOK[t]; }
+
+async function route(){
+  nav(); const p=location.hash.slice(2)||'dashboard';
+  $('#actions').innerHTML='';
+  try{
+    if(p==='dashboard') await dashboard();
+    else if(p==='billing') await billing();
+    else if(META[p]) await tableView(p);
+    else go('dashboard');
+  }catch(e){ $('#view').innerHTML=`<div class="card empty">⚠️ ${esc(e.message)}<br><small>Is SQL Server running and the database reachable?</small></div>`; }
+}
+
+/* ---------- dashboard ---------- */
+const chipClass=s=>({Paid:'g',Completed:'g',Available:'g',PartiallyPaid:'a',Scheduled:'b',Occupied:'a',Unpaid:'r',Cancelled:'r'}[s]||'');
+function bars(data,color){
+  const max=Math.max(...data.map(d=>d.n),1);
+  return data.map(d=>`<div class="bar"><span class="l" title="${esc(d.label)}">${esc(d.label)}</span><div class="t"><div style="width:${d.n/max*100}%;background:${color}"></div></div><em>${d.n}</em></div>`).join('')||'<div class="empty">No data</div>';
+}
+async function dashboard(){
+  $('#title').textContent='Dashboard'; $('#sub').textContent='Live overview of the hospital';
+  const d=await api('/api/dashboard'), k=d.kpi;
+  const tile=(ic,bg,v,l)=>`<div class="card kpi"><div class="ic" style="background:${bg}22">${ic}</div><div><b>${v}</b><span>${l}</span></div></div>`;
+  const rmax=Math.max(...d.revenue.map(r=>r.n),1);
+  $('#view').innerHTML=`
+  <div class="kpis">
+    ${tile('🧑','#3b82f6',k.patients,'Patients')}
+    ${tile('👨‍⚕️','#0e9f8e',k.doctors,'Doctors')}
+    ${tile('👩‍⚕️','#8b5cf6',k.nurses,'Nurses')}
+    ${tile('🛏️','#f59e0b',k.admitted,'Currently admitted')}
+    ${tile('📅','#3b82f6',k.upcoming,'Scheduled appointments')}
+    ${tile('🚪','#10b981',`${k.rooms_free}/${k.rooms}`,'Rooms available')}
+  </div>
+  <div class="kpis">
+    ${tile('🧾','#3b82f6',money(k.billed),'Total billed')}
+    ${tile('✅','#10b981',money(k.collected),'Collected')}
+    ${tile('⏳','#ef4444',money(k.outstanding),'Outstanding')}
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>Collections by month</h3><div class="body"><div class="cols">${d.revenue.map(r=>`<div><b>${Math.round(r.n/1000)}k</b><i style="height:${r.n/rmax*100}px"></i>${esc(r.label.slice(2))}</div>`).join('')||'<div class="empty">No payments</div>'}</div></div></div>
+    <div class="card"><h3>Upcoming appointments</h3><div class="body"><table class="mini"><tbody>${d.upcoming.map(a=>`<tr><td><b>${fmtDate(a.d)}</b><br><small>${a.tm}</small></td><td>${esc(a.patient)}<br><small>${esc(a.reason||'')}</small></td><td><small>Dr. ${esc(a.doctor)}</small></td></tr>`).join('')||'<tr><td class="empty">Nothing scheduled</td></tr>'}</tbody></table></div></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>Appointments by status</h3><div class="body">${bars(d.appt_status,'var(--blue)')}</div></div>
+    <div class="card"><h3>Bills by payment status</h3><div class="body">${bars(d.pay_status,'var(--amber)')}</div></div>
+    <div class="card"><h3>Doctors per department</h3><div class="body">${bars(d.dept,'var(--brand)')}</div></div>
+    <div class="card"><h3>Patients by blood group</h3><div class="body">${bars(d.blood,'var(--violet)')}</div></div>
+  </div>`;
+}
+
+/* ---------- generic table view ---------- */
+async function tableView(t){
+  const m=META[t]; const st=state[t]=state[t]||{q:'',page:1,sort:m.pk,dir:'asc'};
+  $('#title').textContent=pretty(t); $('#sub').textContent='';
+  $('#actions').innerHTML=`<button class="btn pri" onclick="openForm('${t}')">＋ New ${pretty(t)}</button>`;
+  const fks=m.columns.filter(c=>c.fk); await Promise.all(fks.map(c=>lookup(c.fk.table)));
+  const r=await api(`/api/t/${t}?q=${encodeURIComponent(st.q)}&page=${st.page}&sort=${st.sort}&dir=${st.dir}`);
+  $('#sub').textContent=`${r.total} record${r.total==1?'':'s'}`;
+  const pages=Math.max(1,Math.ceil(r.total/r.size));
+  const cell=(c,v)=>{
+    if(v===null||v===undefined||v==='') return '<span style="color:var(--muted)">—</span>';
+    if(c.fk) return `<span class="fk">${esc(LOOK[c.fk.table][v]??v)}</span>`;
+    if(c.type==='bit') return v?'<span class="chip g">Yes</span>':'<span class="chip">No</span>';
+    if(/Status$/.test(c.name)) return `<span class="chip ${chipClass(v)}">${esc(v)}</span>`;
+    if(c.type==='datetime2') return fmtDate(v);
+    if(c.type==='decimal') return /Price|Salary|Charge|Amount/.test(c.name)?money(v):v;
+    return esc(v);
+  };
+  $('#view').innerHTML=`<div class="card">
+    <div class="tools"><input class="search" id="q" placeholder="Search ${pretty(t)}…" value="${esc(st.q)}"></div>
+    <div class="wrap"><table><thead><tr>${m.columns.map(c=>`<th data-s="${c.name}" class="${st.sort===c.name?'sorted':''}">${esc(c.name===m.pk?'ID':nice(c.name))}${st.sort===c.name?(st.dir==='asc'?' ▲':' ▼'):''}</th>`).join('')}<th></th></tr></thead>
+    <tbody>${r.rows.map(row=>`<tr>${m.columns.map(c=>`<td title="${esc(row[c.name])}">${cell(c,row[c.name])}</td>`).join('')}
+      <td class="act">${t==='Patient'?`<button class="btn sm" onclick="profile(${row[m.pk]})">Profile</button> `:''}<button class="btn sm" onclick='openForm("${t}",${row[m.pk]})'>Edit</button> <button class="btn sm dan" onclick="del('${t}',${row[m.pk]})">Delete</button></td></tr>`).join('')||`<tr><td colspan="99" class="empty">No records found</td></tr>`}</tbody></table></div>
+    <div class="pager"><button class="btn sm" ${st.page<=1?'disabled':''} id="pv">‹ Prev</button><span>Page ${st.page} of ${pages}</span><button class="btn sm" ${st.page>=pages?'disabled':''} id="nx">Next ›</button></div></div>`;
+  let tm; $('#q').oninput=e=>{clearTimeout(tm);tm=setTimeout(()=>{st.q=e.target.value;st.page=1;tableView(t).then(()=>{const q=$('#q');q.focus();q.setSelectionRange(99,99)})},300)};
+  $('#pv').onclick=()=>{st.page--;tableView(t)}; $('#nx').onclick=()=>{st.page++;tableView(t)};
+  document.querySelectorAll('th[data-s]').forEach(th=>th.onclick=()=>{const s=th.dataset.s;st.dir=st.sort===s&&st.dir==='asc'?'desc':'asc';st.sort=s;tableView(t)});
+}
+
+async function del(t,id){
+  if(!confirm(`Delete ${pretty(t)} #${id}? This cannot be undone.`)) return;
+  try{await api(`/api/t/${t}/${id}`,{method:'DELETE'});toast('Deleted');delete LOOK[t];route()}catch(e){toast(e.message,1)}
+}
+
+/* ---------- form ---------- */
+async function openForm(t,id,preset={},after){
+  const m=META[t]; let row={...preset};
+  if(id!=null){row=await api(`/api/t/${t}/${id}`)}
+  const fields=await Promise.all(m.columns.filter(c=>!c.identity).map(async c=>{
+    const v=row[c.name]??'', req=!c.nullable&&c.type!=='bit', lab=`<label>${esc(c.name===m.pk?'ID (auto if blank)':nice(c.name))}${req&&c.name!==m.pk?' <u>*</u>':''}</label>`;
+    const nm=`name="${c.name}"`;
+    if(c.name===m.pk&&id!=null) return `<div>${lab}<input value="${esc(v)}" disabled></div>`;
+    if(c.fk){const l=(await lookup(c.fk.table,)) && LOOK[c.fk.table]._list;
+      return `<div>${lab}<select ${nm}><option value="">— select —</option>${l.map(o=>`<option value="${o.id}" ${String(o.id)===String(v)?'selected':''}>${esc(o.label)}</option>`).join('')}</select></div>`}
+    if(c.type==='bit') return `<div>${lab}<input type="checkbox" ${nm} ${(id==null||v)?'checked':''}></div>`;
+    if(c.type==='date') return `<div>${lab}<input type="date" ${nm} value="${esc(String(v).slice(0,10))}"></div>`;
+    if(c.type==='time') return `<div>${lab}<input type="time" step="60" ${nm} value="${esc(String(v).slice(0,5))}"></div>`;
+    if(c.type==='datetime2') return `<div>${lab}<input type="datetime-local" ${nm} value="${esc(String(v).slice(0,16))}"></div>`;
+    if(['int','decimal'].includes(c.type)) return `<div>${lab}<input type="number" step="${c.type==='int'?1:0.01}" ${nm} value="${esc(v)}"></div>`;
+    if(c.length>=250||c.length===-1) return `<div class="full">${lab}<textarea rows="3" ${nm}>${esc(v)}</textarea></div>`;
+    let dl='',list='';
+    if(SUGGEST.test(c.name)){const d=await api(`/api/distinct/${t}/${c.name}`);list=`list="dl_${c.name}"`;dl=`<datalist id="dl_${c.name}">${d.map(x=>`<option value="${esc(String(x).trim())}">`).join('')}</datalist>`}
+    return `<div>${lab}<input ${nm} ${list} maxlength="${c.length>0?c.length:''}" value="${esc(String(v).trim())}">${dl}</div>`;
+  }));
+  const dlg=$('#dlg'); dlg.className='';
+  dlg.innerHTML=`<form method="dialog" id="f"><div class="mh"><h2>${id!=null?'Edit':'New'} ${pretty(t)}</h2><button class="btn sm" type="button" onclick="dlg.close()">✕</button></div>
+  <div class="mb"><div class="form">${fields.join('')}</div></div>
+  <div class="mf"><button class="btn" type="button" onclick="dlg.close()">Cancel</button><button class="btn pri" type="submit">${id!=null?'Save changes':'Create'}</button></div></form>`;
+  dlg.showModal();
+  $('#f').onsubmit=async e=>{
+    e.preventDefault(); const body={};
+    m.columns.forEach(c=>{const el=$('#f').elements[c.name]; if(!el||el.disabled)return; body[c.name]=c.type==='bit'?el.checked:el.value});
+    try{await api(id!=null?`/api/t/${t}/${id}`:`/api/t/${t}`,{method:id!=null?'PUT':'POST',body});
+      dlg.close();toast(id!=null?'Saved':'Created');delete LOOK[t];after?after():route()}
+    catch(err){toast(err.message,1)}
+  };
+}
+
+/* ---------- patient profile ---------- */
+function mini(cols,rows,fmt={}){
+  if(!rows.length) return '<div class="empty" style="padding:10px">None on record</div>';
+  return `<table class="mini"><thead><tr>${cols.map(c=>`<th>${c[1]}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${fmt[c[0]]?fmt[c[0]](r[c[0]]):esc(r[c[0]]??'—')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+}
+async function profile(id){
+  const d=await api('/api/patient/'+id), p=d.patient, dlg=$('#dlg'); dlg.className='wide';
+  const age=p.Patient_Date_Of_Birth?Math.floor((Date.now()-new Date(p.Patient_Date_Of_Birth))/31557600000):'—';
+  const chip=v=>`<span class="chip ${chipClass(v)}">${esc(v)}</span>`;
+  dlg.innerHTML=`<div class="mh"><h2>Patient profile</h2><button class="btn sm" onclick="dlg.close()">✕</button></div><div class="mb">
+  <div class="prof"><div class="av">${esc(p.Patient_First_Name[0]+p.Patient_Last_Name[0])}</div><div><h2 style="margin:0">${esc(p.Patient_First_Name+' '+p.Patient_Last_Name)}</h2><span style="color:var(--muted)">Patient #${p.Patient_ID}</span></div></div>
+  <div class="facts"><div><span>Age</span>${age}</div><div><span>Gender</span>${esc(String(p.Patient_Gender).trim())}</div><div><span>Blood group</span>${esc(p.Patient_Blood_Group||'—')}</div><div><span>Phone</span>${esc(p.Patient_Phone||'—')}</div><div><span>Address</span>${esc(p.Patient_Address||'—')}</div></div>
+  <div class="sec">Appointments</div>${mini([['d','Date'],['tm','Time'],['doctor','Doctor'],['reason','Reason'],['status','Status']],d.appointments,{d:fmtDate,status:chip})}
+  <div class="sec">Medical records</div>${mini([['d','Date'],['dx','Diagnosis'],['tx','Treatment'],['doctor','Doctor']],d.records,{d:fmtDate})}
+  <div class="sec">Test reports</div>${mini([['d','Date'],['type','Type'],['result','Result']],d.tests,{d:fmtDate})}
+  <div class="sec">Admissions</div>${mini([['a','Admitted'],['dd','Discharged'],['reason','Reason']],d.admissions,{a:fmtDate,dd:v=>v?fmtDate(v):chip('Admitted')})}
+  <div class="sec">Bills</div>${mini([['id','Bill'],['d','Date'],['total','Total'],['paid','Paid'],['bal','Balance'],['status','Status']],d.bills,{d:fmtDate,total:money,paid:money,bal:money,status:chip})}
+  </div>`;
+  dlg.showModal();
+}
+
+/* ---------- billing ---------- */
+async function billing(){
+  $('#title').textContent='Billing'; $('#sub').textContent='Invoices, line items and payments';
+  $('#actions').innerHTML=`<button class="btn" onclick="openForm('Bills')">＋ New bill</button>`;
+  const list=await api('/api/bills'); const f=state.billFilter||'All';
+  const show=list.filter(b=>f==='All'||b.Bill_Payment_Status===f);
+  const stats=['All','Paid','PartiallyPaid','Unpaid'];
+  $('#view').innerHTML=`<div class="card"><div class="tools">${stats.map(s=>`<button class="btn sm ${f===s?'pri':''}" onclick="state.billFilter='${s}';billing()">${s==='All'?'All':s.replace('PartiallyPaid','Partially paid')} (${s==='All'?list.length:list.filter(b=>b.Bill_Payment_Status===s).length})</button>`).join('')}</div>
+  <div class="wrap"><table><thead><tr><th>Bill</th><th>Patient</th><th>Date</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th><th></th></tr></thead><tbody>
+  ${show.map(b=>`<tr><td><b>#${b.Bill_ID}</b></td><td>${esc(b.Patient_Name)}</td><td>${fmtDate(b.Bill_Date)}</td><td>${money(b.Bill_Total)}</td><td>${money(b.Bill_Paid_Amount)}</td><td>${money(b.Bill_Balance)}</td><td><span class="chip ${chipClass(b.Bill_Payment_Status)}">${esc(b.Bill_Payment_Status)}</span></td><td class="act"><button class="btn sm" onclick="billDetail(${b.Bill_ID})">Open</button></td></tr>`).join('')||'<tr><td colspan=8 class="empty">No bills</td></tr>'}
+  </tbody></table></div></div>`;
+}
+async function billDetail(id){
+  const d=await api('/api/bills/'+id), s=d.summary, dlg=$('#dlg'); dlg.className='wide';
+  dlg.innerHTML=`<div class="mh"><h2>Bill #${id} · ${esc(s.Patient_Name)}</h2><button class="btn sm" onclick="dlg.close()">✕</button></div><div class="mb">
+  <div class="sum"><div><span>Total</span><b>${money(s.Bill_Total)}</b></div><div><span>Paid</span><b style="color:var(--green)">${money(s.Bill_Paid_Amount)}</b></div><div><span>Balance</span><b style="color:${s.Bill_Balance>0?'var(--red)':'var(--green)'}">${money(s.Bill_Balance)}</b></div><div><span>Status</span><b><span class="chip ${chipClass(s.Bill_Payment_Status)}">${esc(s.Bill_Payment_Status)}</span></b></div></div>
+  <div class="sec">Line items <button class="btn sm" style="float:right" onclick="addTo('Bill_Item',${id},${id})">＋ Add item</button></div>
+  ${mini([['Service_Name','Service'],['Bill_Item_Description','Description'],['Bill_Item_Quantity','Qty'],['Bill_Item_Unit_Price','Unit price']],d.items,{Bill_Item_Unit_Price:money})}
+  <div class="sec">Payments <button class="btn sm pri" style="float:right" onclick="addTo('Payment',${id},${id})" ${s.Bill_Balance<=0?'disabled':''}>＋ Record payment</button></div>
+  ${mini([['Payment_Date','Date'],['Payment_Amount','Amount'],['Payment_Method','Method'],['Payment_Reference_Number','Reference']],d.payments,{Payment_Date:fmtDate,Payment_Amount:money})}
+  </div>`;
+  dlg.showModal();
+}
+async function addTo(t,billId,reopen){
+  $('#dlg').close();
+  const preset={Bill_ID:billId}; if(t==='Payment') preset.Payment_Date=new Date().toISOString().slice(0,16);
+  await openForm(t,null,preset,()=>{route();billDetail(reopen)});
+}
+
+/* ---------- boot ---------- */
+(async()=>{
+  try{ META=Object.fromEntries((await api('/api/meta')).map(t=>[t.name,t])); }
+  catch(e){ $('#view').innerHTML=`<div class="card empty">⚠️ ${esc(e.message)}</div>`; }
+  route();
+})();
+</script>
+</body>
+</html>
