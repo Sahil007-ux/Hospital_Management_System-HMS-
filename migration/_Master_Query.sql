@@ -231,7 +231,6 @@ CREATE TABLE [dbo].[Doctor](
 	[Department_ID] [int] NOT NULL,
 	[Doctor_Specialization] [varchar](100) NOT NULL,
 	[Doctor_Qualification] [varchar](100) NOT NULL,
-	[Doctor_Department] [varchar](100) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[Doctor_ID] ASC
@@ -371,7 +370,6 @@ CREATE TABLE [dbo].[Patient](
 	[Patient_First_Name] [varchar](50) NOT NULL,
 	[Patient_Last_Name] [varchar](50) NOT NULL,
 	[Patient_Gender] [char](7) NULL,
-	[Patient_Age] [int] NULL,
 	[Patient_Date_Of_Birth] [date] NULL,
 	[Patient_Phone] [varchar](20) NULL,
 	[Patient_Address] [varchar](50) NULL,
